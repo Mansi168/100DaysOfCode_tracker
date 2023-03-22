@@ -1,0 +1,33 @@
+class Solution {
+public:
+    int maxPoints(vector<vector<int>>& points) {
+        int size = points.size();
+        if (size<3){
+            return size;
+        }
+        int ans = 0;
+        
+        for(int i=0; i<size; i++){
+            unordered_map<double, int> mp;
+            int self = 1;
+            for(int j=i+1; j<size; j++){
+                if(points[i][0]==points[j][0] && points[i][1]==points[j][1]){
+                    self++;
+                }
+                else if(points[i][0]==points[j][0]){
+                    mp[INT_MAX]++;   //to store prependicular slope value
+                }
+                else {
+                    double slope = double(points[i][1]-points[j][1]) / double(points[i][0]-points[j][0]);
+                    mp[slope]++;
+                }
+            }
+            int maxi = 0;
+            for(auto i : mp){
+                maxi = max(maxi, i.second); 
+            }
+            ans = max(ans, maxi+self);
+        }
+        return ans;
+    }
+};
