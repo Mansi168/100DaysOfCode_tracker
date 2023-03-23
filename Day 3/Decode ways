@@ -1,0 +1,27 @@
+class Solution {
+public:
+    int rec(int ind, int n, string s, vector<int>&dp){
+        if(ind==n) return 1;
+        
+        if(dp[ind] != -1) return dp[ind];
+
+        int ans = 0;
+
+        if(s[ind]>='1' && s[ind]<='9'){
+             ans += rec(ind+1, n, s,dp); 
+        }
+        if(ind<n-1){
+            if(s[ind]=='1'  || (s[ind]=='2' && s[ind+1]<= '6')){
+               ans += rec(ind+2, n, s,dp);
+            }
+        }
+        
+        return dp[ind] = ans;
+    }
+
+    int numDecodings(string s) {
+        int n = s.length();
+        vector<int> dp(n+1, -1);
+        return rec(0,n,s, dp);
+    }
+};
