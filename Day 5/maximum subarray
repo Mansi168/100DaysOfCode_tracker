@@ -1,0 +1,16 @@
+
+    int maxSubArray(vector<int>& nums) {
+        //kadane's algorithm
+        int sum = 0;
+         int maxi = nums[0];
+        for(int i=0;i<nums.size();i++){
+        //step 1
+             sum+=nums[i];
+        //step 2
+             maxi = max(maxi,sum);
+        //step 3
+             if(sum < 0 )
+             sum =0;
+        }
+        return maxi;
+    }
