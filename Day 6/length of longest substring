@@ -1,0 +1,25 @@
+int lengthOfLongestSubstring(string s) {
+       int n= s.length();
+       int ans= 0;
+       int i=0, j=0;
+
+       map<char,int>m;
+       int cnt=0;
+       while(j<n){
+           if(m[s[j]] == 0){
+               cnt++;
+               m[s[j]] = 1;
+               ans = max(ans,cnt);
+               j++;
+           }
+           else{
+               while(i<j && m[s[j]] == 1){
+                   if(m[s[i]]==1) m[s[i]]=0;
+                   cnt--;
+                   i++;
+               }
+           }
+       }
+
+    return ans;
+    }
