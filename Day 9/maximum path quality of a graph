@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int ans = 0;
+    void dfs(int src, int currTime, int currVal, int maxTime, vector<int>& values, vector<pair<int,int>>adj[]){
+        if(currTime>maxTime)return;
+        currVal += values[src];
+        if(src==0) ans = max(ans, currVal);
+
+        int temp = values[src];
+        values[src] = 0;
+        for(auto x : adj[src]){
+            dfs(x.first, currTime+x.second, currVal, maxTime, values, adj);
+        }
+        values[src] = temp;
+    }
+    int maximalPathQuality(vector<int>& values, vector<vector<int>>& edges, int maxTime) {
+        int n = values.size();
+        vector<pair<int,int>>adj[n];
+        for(auto e : edges){
+            adj[e[0]].push_back({e[1], e[2]});
+            adj[e[1]].push_back({e[0], e[2]});
+        }
+        dfs(0,0,0,maxTime, values, adj);
+        return ans;
+    }
+};
